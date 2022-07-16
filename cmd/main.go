@@ -5,12 +5,14 @@ import (
 	"os/signal"
 	"syscall"
 
+	ctxt "github.com/doyyan/portdomainservice/configuration/context"
 	"github.com/doyyan/portdomainservice/configuration/logging"
 )
 
 func main() {
 	// channel to stop after Interrupt or Kill signals
 	errChan := make(chan error)
+	ctx, cancel := ctxt.NewCancelContext()
 
 	// create a new logger for cross application logging
 	logger := logging.NewLogger()
@@ -18,6 +20,7 @@ func main() {
 	go func() {
 		// channel to listen on Interrupt or Kill signal from OS
 		sig := <-NotifySignals()
+		cancel()
 		logger.Warn(sig)
 		// send to errChannel as we have recieved a Kill/Interrupt signal
 		errChan <- nil
