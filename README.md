@@ -8,7 +8,12 @@ Usage
 go run cmd/main.go
 go build ./...
 go test ./...
+
+$CWD/ports.json
+
 curl -X POST  http://localhost:8090/v1/updateports --http0.9
+
+curl -X POST  http://localhost:8090/v1/createports --http0.9
 Notes
 ================
 
