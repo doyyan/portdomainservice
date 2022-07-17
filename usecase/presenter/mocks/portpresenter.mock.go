@@ -39,7 +39,7 @@ type PortsPresenterMock struct {
 }
 
 // ResponsePorts calls ResponsePortsFunc.
-func (mock *PortsPresenterMock) ResponsePorts(ports []*model.Port) []*model.Port {
+func (mock PortsPresenterMock) ResponsePorts(ports []*model.Port) []*model.Port {
 	if mock.ResponsePortsFunc == nil {
 		panic("PortsPresenterMock.ResponsePortsFunc: method is nil but PortsPresenter.ResponsePorts was just called")
 	}
@@ -57,7 +57,7 @@ func (mock *PortsPresenterMock) ResponsePorts(ports []*model.Port) []*model.Port
 // ResponsePortsCalls gets all the calls that were made to ResponsePorts.
 // Check the length with:
 //     len(mockedPortsPresenter.ResponsePortsCalls())
-func (mock *PortsPresenterMock) ResponsePortsCalls() []struct {
+func (mock PortsPresenterMock) ResponsePortsCalls() []struct {
 	Ports []*model.Port
 } {
 	var calls []struct {

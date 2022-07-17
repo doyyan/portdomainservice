@@ -37,7 +37,7 @@ func (p *portInteractor) CreatePorts(ports []*model.Port) ([]*model.Port, error)
 			p.DBRepository.CreatePort(*port)
 		}
 	}
-	return nil, nil
+	return ports, nil
 }
 
 //UpdatePorts updates a port
@@ -55,5 +55,5 @@ func (p *portInteractor) UpdatePorts(ports []*model.Port) ([]*model.Port, error)
 			p.DBRepository.UpdatePort(*port)
 		}
 	}
-	return nil, nil
+	return ports, nil
 }

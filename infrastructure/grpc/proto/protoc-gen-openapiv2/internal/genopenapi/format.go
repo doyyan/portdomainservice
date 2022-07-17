@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
-
-	"gopkg.in/yaml.v2"
 )
 
 type Format string

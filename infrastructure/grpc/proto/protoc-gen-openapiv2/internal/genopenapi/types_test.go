@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"strings"
 	"testing"
-
-	"gopkg.in/yaml.v2"
 )
 
 func newSpaceReplacer() *strings.Replacer {
