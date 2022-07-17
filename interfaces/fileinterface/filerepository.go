@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"sync"
 
 	"github.com/doyyan/portdomainservice/dto/datastore"
 )
@@ -51,8 +52,15 @@ func readFile() []*datastore.Port {
 
 	json.Unmarshal(byteValue, &ports)
 	var listOfPorts []*datastore.Port
+	// append operation asynchronised to make it quicker
+	var wg sync.WaitGroup
+	wg.Add(len(ports.Ports))
 	for _, port := range ports.Ports {
-		listOfPorts = append(listOfPorts, &port)
+		go func() {
+			listOfPorts = append(listOfPorts, &port)
+			wg.Done()
+		}()
 	}
+	wg.Wait()
 	return listOfPorts
 }
