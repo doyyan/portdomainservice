@@ -91,6 +91,11 @@ func NewGRPCServer(c controller.PortController) {
 		log.Fatalln("Failed to register gateway:", err)
 	}
 
+	err = RegisterCreatePortsHandler(context.Background(), gwmux, conn)
+	if err != nil {
+		log.Fatalln("Failed to register gateway:", err)
+	}
+
 	gwServer := &http.Server{
 		Addr:    ":8090",
 		Handler: gwmux,

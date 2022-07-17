@@ -33,7 +33,7 @@ func (f filedata) UpdatePorts() ([]*datastore.Port, error) {
 }
 
 type AllPorts struct {
-	Portname []datastore.Port
+	Ports []datastore.Port
 }
 
 func readFile() []*datastore.Port {
@@ -49,9 +49,9 @@ func readFile() []*datastore.Port {
 	// read our opened jsonFile as a byte array.
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
-	json.Unmarshal(byteValue, ports)
+	json.Unmarshal(byteValue, &ports)
 	var listOfPorts []*datastore.Port
-	for _, port := range ports.Portname {
+	for _, port := range ports.Ports {
 		listOfPorts = append(listOfPorts, &port)
 	}
 	return listOfPorts
