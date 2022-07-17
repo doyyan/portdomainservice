@@ -1,15 +1,58 @@
 package fileinterface
 
-import "github.com/doyyan/portdomainservice/dto/datastore"
+import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
+	"os"
+
+	"github.com/doyyan/portdomainservice/dto/datastore"
+)
 
 type (
 	//FileRepository an interface to talk to the DB/datastore
 	FileRepository interface {
 		// CreatePorts save a given list of Ports to the datastore
-		CreatePorts(ports []*datastore.Port) ([]*datastore.Port, error)
+		CreatePorts() ([]*datastore.Port, error)
 		// UpdatePorts update data for a given list of ports in the datastore
-		UpdatePorts(ports []*datastore.Port) ([]*datastore.Port, error)
-		// FindAPort find a single Port in the datastore
-		FindAPort(ports datastore.Port) (datastore.Port, error)
+		UpdatePorts() ([]*datastore.Port, error)
 	}
 )
+
+type filedata struct{}
+
+func NewFilePortRepository() filedata {
+	return filedata{}
+}
+func (f filedata) CreatePorts() ([]*datastore.Port, error) {
+	return readFile(), nil
+}
+
+func (f filedata) UpdatePorts() ([]*datastore.Port, error) {
+	return readFile(), nil
+}
+
+type AllPorts struct {
+	Portname []datastore.Port
+}
+
+func readFile() []*datastore.Port {
+	var ports AllPorts
+	// Open our jsonFile
+	jsonFile, err := os.Open("ports.json")
+	// if we os.Open returns an error then handle it
+	if err != nil {
+		log.Fatal(err)
+	}
+	// defer the closing of our jsonFile so that we can parse it later on
+	defer jsonFile.Close()
+	// read our opened jsonFile as a byte array.
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+
+	json.Unmarshal(byteValue, ports)
+	var listOfPorts []*datastore.Port
+	for _, port := range ports.Portname {
+		listOfPorts = append(listOfPorts, &port)
+	}
+	return listOfPorts
+}

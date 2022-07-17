@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_CreatePorts_SayHello_0(ctx context.Context, marshaler runtime.Marshaler, client CreatePortsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_CreatePorts_CreatePorts_0(ctx context.Context, marshaler runtime.Marshaler, client CreatePortsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateOrUpdatePortsRequest
 	var metadata runtime.ServerMetadata
 
@@ -43,12 +43,12 @@ func request_CreatePorts_SayHello_0(ctx context.Context, marshaler runtime.Marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.SayHello(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreatePorts(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_CreatePorts_SayHello_0(ctx context.Context, marshaler runtime.Marshaler, server CreatePortsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_CreatePorts_CreatePorts_0(ctx context.Context, marshaler runtime.Marshaler, server CreatePortsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateOrUpdatePortsRequest
 	var metadata runtime.ServerMetadata
 
@@ -60,12 +60,12 @@ func local_request_CreatePorts_SayHello_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.SayHello(ctx, &protoReq)
+	msg, err := server.CreatePorts(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_UpdatePorts_SayHello_0(ctx context.Context, marshaler runtime.Marshaler, client UpdatePortsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_UpdatePorts_UpdatePorts_0(ctx context.Context, marshaler runtime.Marshaler, client UpdatePortsClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateOrUpdatePortsRequest
 	var metadata runtime.ServerMetadata
 
@@ -77,12 +77,12 @@ func request_UpdatePorts_SayHello_0(ctx context.Context, marshaler runtime.Marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.SayHello(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.UpdatePorts(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_UpdatePorts_SayHello_0(ctx context.Context, marshaler runtime.Marshaler, server UpdatePortsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_UpdatePorts_UpdatePorts_0(ctx context.Context, marshaler runtime.Marshaler, server UpdatePortsServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateOrUpdatePortsRequest
 	var metadata runtime.ServerMetadata
 
@@ -94,7 +94,7 @@ func local_request_UpdatePorts_SayHello_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.SayHello(ctx, &protoReq)
+	msg, err := server.UpdatePorts(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -105,18 +105,18 @@ func local_request_UpdatePorts_SayHello_0(ctx context.Context, marshaler runtime
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterCreatePortsHandlerFromEndpoint instead.
 func RegisterCreatePortsHandlerServer(ctx context.Context, mux *runtime.ServeMux, server CreatePortsServer) error {
 
-	mux.Handle("POST", pattern_CreatePorts_SayHello_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CreatePorts_CreatePorts_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ports.CreatePorts/SayHello", runtime.WithHTTPPathPattern("/v1/createports"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ports.CreatePorts/CreatePorts", runtime.WithHTTPPathPattern("/v1/createports"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CreatePorts_SayHello_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CreatePorts_CreatePorts_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -124,7 +124,7 @@ func RegisterCreatePortsHandlerServer(ctx context.Context, mux *runtime.ServeMux
 			return
 		}
 
-		forward_CreatePorts_SayHello_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CreatePorts_CreatePorts_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -137,18 +137,18 @@ func RegisterCreatePortsHandlerServer(ctx context.Context, mux *runtime.ServeMux
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterUpdatePortsHandlerFromEndpoint instead.
 func RegisterUpdatePortsHandlerServer(ctx context.Context, mux *runtime.ServeMux, server UpdatePortsServer) error {
 
-	mux.Handle("POST", pattern_UpdatePorts_SayHello_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_UpdatePorts_UpdatePorts_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ports.UpdatePorts/SayHello", runtime.WithHTTPPathPattern("/v1/updateports"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ports.UpdatePorts/UpdatePorts", runtime.WithHTTPPathPattern("/v1/updateports"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_UpdatePorts_SayHello_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_UpdatePorts_UpdatePorts_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -156,7 +156,7 @@ func RegisterUpdatePortsHandlerServer(ctx context.Context, mux *runtime.ServeMux
 			return
 		}
 
-		forward_UpdatePorts_SayHello_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_UpdatePorts_UpdatePorts_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -201,23 +201,23 @@ func RegisterCreatePortsHandler(ctx context.Context, mux *runtime.ServeMux, conn
 // "CreatePortsClient" to call the correct interceptors.
 func RegisterCreatePortsHandlerClient(ctx context.Context, mux *runtime.ServeMux, client CreatePortsClient) error {
 
-	mux.Handle("POST", pattern_CreatePorts_SayHello_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CreatePorts_CreatePorts_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ports.CreatePorts/SayHello", runtime.WithHTTPPathPattern("/v1/createports"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ports.CreatePorts/CreatePorts", runtime.WithHTTPPathPattern("/v1/createports"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CreatePorts_SayHello_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CreatePorts_CreatePorts_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CreatePorts_SayHello_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CreatePorts_CreatePorts_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -225,11 +225,11 @@ func RegisterCreatePortsHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_CreatePorts_SayHello_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "createports"}, ""))
+	pattern_CreatePorts_CreatePorts_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "createports"}, ""))
 )
 
 var (
-	forward_CreatePorts_SayHello_0 = runtime.ForwardResponseMessage
+	forward_CreatePorts_CreatePorts_0 = runtime.ForwardResponseMessage
 )
 
 // RegisterUpdatePortsHandlerFromEndpoint is same as RegisterUpdatePortsHandler but
@@ -270,23 +270,23 @@ func RegisterUpdatePortsHandler(ctx context.Context, mux *runtime.ServeMux, conn
 // "UpdatePortsClient" to call the correct interceptors.
 func RegisterUpdatePortsHandlerClient(ctx context.Context, mux *runtime.ServeMux, client UpdatePortsClient) error {
 
-	mux.Handle("POST", pattern_UpdatePorts_SayHello_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_UpdatePorts_UpdatePorts_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ports.UpdatePorts/SayHello", runtime.WithHTTPPathPattern("/v1/updateports"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ports.UpdatePorts/UpdatePorts", runtime.WithHTTPPathPattern("/v1/updateports"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_UpdatePorts_SayHello_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_UpdatePorts_UpdatePorts_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_UpdatePorts_SayHello_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_UpdatePorts_UpdatePorts_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -294,9 +294,9 @@ func RegisterUpdatePortsHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_UpdatePorts_SayHello_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "updateports"}, ""))
+	pattern_UpdatePorts_UpdatePorts_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "updateports"}, ""))
 )
 
 var (
-	forward_UpdatePorts_SayHello_0 = runtime.ForwardResponseMessage
+	forward_UpdatePorts_UpdatePorts_0 = runtime.ForwardResponseMessage
 )

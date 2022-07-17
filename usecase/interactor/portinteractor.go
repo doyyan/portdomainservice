@@ -13,17 +13,18 @@ type portInteractor struct {
 
 type PortInterActor interface {
 	// CreatePorts creates Ports in the datastore
-	CreatePort(ports *model.Port) ([]*model.Port, error)
+	CreatePorts(ports []*model.Port) ([]*model.Port, error)
 	// Updates Ports in the datastore
-	UpdatePort(ports *model.Port) ([]*model.Port, error)
+	UpdatePorts(ports []*model.Port) ([]*model.Port, error)
 }
 
-func NewPortInteractor(db repository.DBRepository, p presenter.PortsPresenter) *portInteractor {
-	return &portInteractor{DBRepository: db, PortPresentor: p}
+func NewPortInteractor(db repository.DBRepository, p presenter.PortsPresenter) portInteractor {
+	return portInteractor{DBRepository: db, PortPresentor: p}
 }
 
 //CreatePorts calls the DB's create port
-func (p *portInteractor) CreatePorts(ports []*model.Port) ([]*model.Port, error) {
+func (p portInteractor) CreatePorts(ports []*model.Port) ([]*model.Port, error) {
+	var createdPorts []*model.Port
 	for _, port := range ports {
 		valid, err := port.Validate()
 		if err != nil {
@@ -36,12 +37,14 @@ func (p *portInteractor) CreatePorts(ports []*model.Port) ([]*model.Port, error)
 		if valid && !doesExist {
 			p.DBRepository.CreatePort(*port)
 		}
+		createdPorts = append(createdPorts, port)
 	}
-	return ports, nil
+	return createdPorts, nil
 }
 
 //UpdatePorts updates a port
-func (p *portInteractor) UpdatePorts(ports []*model.Port) ([]*model.Port, error) {
+func (p portInteractor) UpdatePorts(ports []*model.Port) ([]*model.Port, error) {
+	var updatedPorts []*model.Port
 	for _, port := range ports {
 		valid, err := port.Validate()
 		if err != nil {
@@ -54,6 +57,7 @@ func (p *portInteractor) UpdatePorts(ports []*model.Port) ([]*model.Port, error)
 		if valid && !doesExist {
 			p.DBRepository.UpdatePort(*port)
 		}
+		updatedPorts = append(updatedPorts, port)
 	}
-	return ports, nil
+	return updatedPorts, nil
 }

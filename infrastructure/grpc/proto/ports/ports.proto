@@ -9,7 +9,7 @@ import "google/api/annotations.proto";
 // Trigger a Creation of Ports
 service CreatePorts {
   // Sends a greeting
-  rpc SayHello (CreateOrUpdatePortsRequest) returns (CreateOrUpdatePortsResponse) {
+  rpc CreatePorts (CreateOrUpdatePortsRequest) returns (CreateOrUpdatePortsResponse) {
     option (google.api.http) = {
       post: "/v1/createports"
       body: "*"
@@ -20,7 +20,7 @@ service CreatePorts {
 // Trigger a Updation of Ports
 service UpdatePorts {
   // Sends a greeting
-  rpc SayHello (CreateOrUpdatePortsRequest) returns (CreateOrUpdatePortsResponse) {
+  rpc UpdatePorts (CreateOrUpdatePortsRequest) returns (CreateOrUpdatePortsResponse) {
     option (google.api.http) = {
       post: "/v1/updateports"
       body: "*"

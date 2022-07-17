@@ -8,7 +8,6 @@ package ports
 
 import (
 	context "context"
-
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -24,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CreatePortsClient interface {
 	// Sends a greeting
-	SayHello(ctx context.Context, in *CreateOrUpdatePortsRequest, opts ...grpc.CallOption) (*CreateOrUpdatePortsResponse, error)
+	CreatePorts(ctx context.Context, in *CreateOrUpdatePortsRequest, opts ...grpc.CallOption) (*CreateOrUpdatePortsResponse, error)
 }
 
 type createPortsClient struct {
@@ -35,9 +34,9 @@ func NewCreatePortsClient(cc grpc.ClientConnInterface) CreatePortsClient {
 	return &createPortsClient{cc}
 }
 
-func (c *createPortsClient) SayHello(ctx context.Context, in *CreateOrUpdatePortsRequest, opts ...grpc.CallOption) (*CreateOrUpdatePortsResponse, error) {
+func (c *createPortsClient) CreatePorts(ctx context.Context, in *CreateOrUpdatePortsRequest, opts ...grpc.CallOption) (*CreateOrUpdatePortsResponse, error) {
 	out := new(CreateOrUpdatePortsResponse)
-	err := c.cc.Invoke(ctx, "/ports.CreatePorts/SayHello", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ports.CreatePorts/CreatePorts", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +48,7 @@ func (c *createPortsClient) SayHello(ctx context.Context, in *CreateOrUpdatePort
 // for forward compatibility
 type CreatePortsServer interface {
 	// Sends a greeting
-	SayHello(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error)
+	CreatePorts(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error)
 	mustEmbedUnimplementedCreatePortsServer()
 }
 
@@ -57,8 +56,8 @@ type CreatePortsServer interface {
 type UnimplementedCreatePortsServer struct {
 }
 
-func (UnimplementedCreatePortsServer) SayHello(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
+func (UnimplementedCreatePortsServer) CreatePorts(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreatePorts not implemented")
 }
 func (UnimplementedCreatePortsServer) mustEmbedUnimplementedCreatePortsServer() {}
 
@@ -73,20 +72,20 @@ func RegisterCreatePortsServer(s grpc.ServiceRegistrar, srv CreatePortsServer) {
 	s.RegisterService(&CreatePorts_ServiceDesc, srv)
 }
 
-func _CreatePorts_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CreatePorts_CreatePorts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateOrUpdatePortsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CreatePortsServer).SayHello(ctx, in)
+		return srv.(CreatePortsServer).CreatePorts(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ports.CreatePorts/SayHello",
+		FullMethod: "/ports.CreatePorts/CreatePorts",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreatePortsServer).SayHello(ctx, req.(*CreateOrUpdatePortsRequest))
+		return srv.(CreatePortsServer).CreatePorts(ctx, req.(*CreateOrUpdatePortsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -99,8 +98,8 @@ var CreatePorts_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CreatePortsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SayHello",
-			Handler:    _CreatePorts_SayHello_Handler,
+			MethodName: "CreatePorts",
+			Handler:    _CreatePorts_CreatePorts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -112,7 +111,7 @@ var CreatePorts_ServiceDesc = grpc.ServiceDesc{
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UpdatePortsClient interface {
 	// Sends a greeting
-	SayHello(ctx context.Context, in *CreateOrUpdatePortsRequest, opts ...grpc.CallOption) (*CreateOrUpdatePortsResponse, error)
+	UpdatePorts(ctx context.Context, in *CreateOrUpdatePortsRequest, opts ...grpc.CallOption) (*CreateOrUpdatePortsResponse, error)
 }
 
 type updatePortsClient struct {
@@ -123,9 +122,9 @@ func NewUpdatePortsClient(cc grpc.ClientConnInterface) UpdatePortsClient {
 	return &updatePortsClient{cc}
 }
 
-func (c *updatePortsClient) SayHello(ctx context.Context, in *CreateOrUpdatePortsRequest, opts ...grpc.CallOption) (*CreateOrUpdatePortsResponse, error) {
+func (c *updatePortsClient) UpdatePorts(ctx context.Context, in *CreateOrUpdatePortsRequest, opts ...grpc.CallOption) (*CreateOrUpdatePortsResponse, error) {
 	out := new(CreateOrUpdatePortsResponse)
-	err := c.cc.Invoke(ctx, "/ports.UpdatePorts/SayHello", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ports.UpdatePorts/UpdatePorts", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +136,7 @@ func (c *updatePortsClient) SayHello(ctx context.Context, in *CreateOrUpdatePort
 // for forward compatibility
 type UpdatePortsServer interface {
 	// Sends a greeting
-	SayHello(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error)
+	UpdatePorts(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error)
 	mustEmbedUnimplementedUpdatePortsServer()
 }
 
@@ -145,8 +144,8 @@ type UpdatePortsServer interface {
 type UnimplementedUpdatePortsServer struct {
 }
 
-func (UnimplementedUpdatePortsServer) SayHello(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SayHello not implemented")
+func (UnimplementedUpdatePortsServer) UpdatePorts(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePorts not implemented")
 }
 func (UnimplementedUpdatePortsServer) mustEmbedUnimplementedUpdatePortsServer() {}
 
@@ -161,20 +160,20 @@ func RegisterUpdatePortsServer(s grpc.ServiceRegistrar, srv UpdatePortsServer) {
 	s.RegisterService(&UpdatePorts_ServiceDesc, srv)
 }
 
-func _UpdatePorts_SayHello_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UpdatePorts_UpdatePorts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateOrUpdatePortsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UpdatePortsServer).SayHello(ctx, in)
+		return srv.(UpdatePortsServer).UpdatePorts(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ports.UpdatePorts/SayHello",
+		FullMethod: "/ports.UpdatePorts/UpdatePorts",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UpdatePortsServer).SayHello(ctx, req.(*CreateOrUpdatePortsRequest))
+		return srv.(UpdatePortsServer).UpdatePorts(ctx, req.(*CreateOrUpdatePortsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -187,8 +186,8 @@ var UpdatePorts_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UpdatePortsServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SayHello",
-			Handler:    _UpdatePorts_SayHello_Handler,
+			MethodName: "UpdatePorts",
+			Handler:    _UpdatePorts_UpdatePorts_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
