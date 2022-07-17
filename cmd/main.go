@@ -7,9 +7,9 @@ import (
 
 	ctxt "github.com/doyyan/portdomainservice/configuration/context"
 	db2 "github.com/doyyan/portdomainservice/configuration/db"
-	"github.com/doyyan/portdomainservice/configuration/grpcserver"
 	"github.com/doyyan/portdomainservice/configuration/logging"
 	"github.com/doyyan/portdomainservice/configuration/portcontroller"
+	"github.com/doyyan/portdomainservice/infrastructure/grpc/proto/ports"
 )
 
 func main() {
@@ -24,7 +24,7 @@ func main() {
 	// create a new connection to the Port Controller
 	controller := portcontroller.NewPortController(db)
 	// start up a GRPC Gateway server to listen up to requests and run the service
-	grpcserver.NewGRPCServer(controller)
+	ports.NewGRPCServer(controller)
 
 	go func() {
 		// channel to listen on Interrupt or Kill signal from OS

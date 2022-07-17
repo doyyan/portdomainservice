@@ -1,4 +1,4 @@
-package grpcserver
+package ports
 
 import (
 	"context"
@@ -6,31 +6,52 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/doyyan/portdomainservice/infrastructure/grpc/proto/ports"
 	"github.com/doyyan/portdomainservice/interfaces/controller"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-type server struct {
-	ports.UnimplementedCreatePortsServer
-	ports.UnimplementedUpdatePortsServer
+type createserver struct {
 	controller controller.PortController
 }
 
-func NewServer(c controller.PortController) *server {
-	return &server{controller: c}
+func (s *createserver) mustEmbedUnimplementedCreatePortsServer() {
+	//TODO implement me
+	panic("implement me")
 }
 
-func (s *server) CreatePortsServer(context.Context, *ports.CreateOrUpdatePortsRequest) (*ports.CreateOrUpdatePortsResponse, error) {
+func (s *createserver) mustEmbedUnimplementedUpdatePortsServer() {
+	//TODO implement me
+	panic("implement me")
+}
+
+type updateserver struct {
+	controller controller.PortController
+}
+
+func (u updateserver) UpdatePorts(ctx context.Context, request *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error) {
+	u.controller.UpdatePorts()
+	return &CreateOrUpdatePortsResponse{Message: "done"}, nil
+}
+
+func (u updateserver) mustEmbedUnimplementedUpdatePortsServer() {
+	//TODO implement me
+	panic("implement me")
+}
+
+func NewServer(c controller.PortController) *createserver {
+	return &createserver{controller: c}
+}
+
+func (s *createserver) CreatePorts(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error) {
 	s.controller.CreatePorts()
-	return &ports.CreateOrUpdatePortsResponse{Message: "done"}, nil
+	return &CreateOrUpdatePortsResponse{Message: "done"}, nil
 }
 
-func (s *server) UpdatePortsServer(context.Context, *ports.CreateOrUpdatePortsRequest) (*ports.CreateOrUpdatePortsResponse, error) {
+func (s *createserver) UpdatePorts(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error) {
 	s.controller.UpdatePorts()
-	return &ports.CreateOrUpdatePortsResponse{Message: "done"}, nil
+	return &CreateOrUpdatePortsResponse{Message: "done"}, nil
 }
 
 func NewGRPCServer(c controller.PortController) {
@@ -43,8 +64,8 @@ func NewGRPCServer(c controller.PortController) {
 	// Create a gRPC server object
 	s := grpc.NewServer()
 	// Attach the Ports Update/Create service to the server
-	ports.RegisterUpdatePortsServer(s, server{})
-	ports.RegisterCreatePortsServer(s, server{})
+	RegisterUpdatePortsServer(s, &updateserver{controller: c})
+	RegisterCreatePortsServer(s, &createserver{controller: c})
 	// Serve gRPC server
 	log.Println("Serving gRPC on 0.0.0.0:8080")
 	go func() {
@@ -65,7 +86,7 @@ func NewGRPCServer(c controller.PortController) {
 
 	gwmux := runtime.NewServeMux()
 	// Register Ports server
-	err = ports.RegisterUpdatePortsHandler(context.Background(), gwmux, conn)
+	err = RegisterUpdatePortsHandler(context.Background(), gwmux, conn)
 	if err != nil {
 		log.Fatalln("Failed to register gateway:", err)
 	}
