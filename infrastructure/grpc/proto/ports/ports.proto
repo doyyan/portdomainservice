@@ -8,7 +8,7 @@ import "google/api/annotations.proto";
 
 // Trigger a Creation of Ports
 service CreatePorts {
-  // Sends a greeting
+  // Creates a list of Ports with data sourced from 'ports.json', only if the port doensn't exist in the database.
   rpc CreatePorts (CreateOrUpdatePortsRequest) returns (CreateOrUpdatePortsResponse) {
     option (google.api.http) = {
       post: "/v1/createports"
@@ -19,7 +19,7 @@ service CreatePorts {
 
 // Trigger a Updation of Ports
 service UpdatePorts {
-  // Sends a greeting
+  // Updates a list of Ports with data sourced from 'ports.json', only if the port exists in the database.
   rpc UpdatePorts (CreateOrUpdatePortsRequest) returns (CreateOrUpdatePortsResponse) {
     option (google.api.http) = {
       post: "/v1/updateports"

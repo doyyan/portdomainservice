@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CreatePortsClient interface {
-	// Sends a greeting
+	// Creates a list of Ports with data sourced from 'ports.json', only if the port doensn't exist in the database.
 	CreatePorts(ctx context.Context, in *CreateOrUpdatePortsRequest, opts ...grpc.CallOption) (*CreateOrUpdatePortsResponse, error)
 }
 
@@ -47,7 +47,7 @@ func (c *createPortsClient) CreatePorts(ctx context.Context, in *CreateOrUpdateP
 // All implementations must embed UnimplementedCreatePortsServer
 // for forward compatibility
 type CreatePortsServer interface {
-	// Sends a greeting
+	// Creates a list of Ports with data sourced from 'ports.json', only if the port doensn't exist in the database.
 	CreatePorts(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error)
 	mustEmbedUnimplementedCreatePortsServer()
 }
@@ -110,7 +110,7 @@ var CreatePorts_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UpdatePortsClient interface {
-	// Sends a greeting
+	// Updates a list of Ports with data sourced from 'ports.json', only if the port exists in the database.
 	UpdatePorts(ctx context.Context, in *CreateOrUpdatePortsRequest, opts ...grpc.CallOption) (*CreateOrUpdatePortsResponse, error)
 }
 
@@ -135,7 +135,7 @@ func (c *updatePortsClient) UpdatePorts(ctx context.Context, in *CreateOrUpdateP
 // All implementations must embed UnimplementedUpdatePortsServer
 // for forward compatibility
 type UpdatePortsServer interface {
-	// Sends a greeting
+	// Updates a list of Ports with data sourced from 'ports.json', only if the port exists in the database.
 	UpdatePorts(context.Context, *CreateOrUpdatePortsRequest) (*CreateOrUpdatePortsResponse, error)
 	mustEmbedUnimplementedUpdatePortsServer()
 }
