@@ -5,19 +5,31 @@ import (
 	"os/signal"
 	"syscall"
 
+	ctxt "github.com/doyyan/portdomainservice/configuration/context"
+	db2 "github.com/doyyan/portdomainservice/configuration/db"
 	"github.com/doyyan/portdomainservice/configuration/logging"
+	"github.com/doyyan/portdomainservice/configuration/portcontroller"
+	"github.com/doyyan/portdomainservice/infrastructure/grpc/proto/ports"
 )
 
 func main() {
 	// channel to stop after Interrupt or Kill signals
 	errChan := make(chan error)
+	_, cancel := ctxt.NewCancelContext()
 
 	// create a new logger for cross application logging
 	logger := logging.NewLogger()
+	//create a new connection to a DB
+	db := db2.NewDB()
+	// create a new connection to the Port Controller
+	controller := portcontroller.NewPortController(db)
+	// start up a GRPC Gateway server to listen up to requests and run the service
+	ports.NewGRPCServer(controller)
 
 	go func() {
 		// channel to listen on Interrupt or Kill signal from OS
 		sig := <-NotifySignals()
+		cancel()
 		logger.Warn(sig)
 		// send to errChannel as we have recieved a Kill/Interrupt signal
 		errChan <- nil

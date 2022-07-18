@@ -1,0 +1,38 @@
+
+syntax = "proto3";
+
+package ports;
+option go_package = "github.com/doyyan/portdomainservice/ports";
+
+import "google/api/annotations.proto";
+
+// Trigger a Creation of Ports
+service CreatePorts {
+  // Creates a list of Ports with data sourced from 'ports.json', only if the port doensn't exist in the database.
+  rpc CreatePorts (CreateOrUpdatePortsRequest) returns (CreateOrUpdatePortsResponse) {
+    option (google.api.http) = {
+      post: "/v1/createports"
+      body: "*"
+    };
+  }
+}
+
+// Trigger a Updation of Ports
+service UpdatePorts {
+  // Updates a list of Ports with data sourced from 'ports.json', only if the port exists in the database.
+  rpc UpdatePorts (CreateOrUpdatePortsRequest) returns (CreateOrUpdatePortsResponse) {
+    option (google.api.http) = {
+      post: "/v1/updateports"
+      body: "*"
+    };
+  }
+}
+// Create a list of Ports
+message CreateOrUpdatePortsRequest {
+  string filepath = 1;
+}
+
+// The response message to explain status of Port Creation
+message CreateOrUpdatePortsResponse {
+  string message = 1;
+}

@@ -18,16 +18,30 @@ func TestNewPort(t *testing.T) {
 		unlocode    string
 		code        string
 	}
-	tests := []struct {
+	tests := map[string]struct {
 		name string
-		args args
+		port Port
 		want *Port
 	}{
-		// TODO: Add test cases.
+		"pass GoodPort": {
+			port: Port{
+				Name:        "Port1",
+				City:        "City1",
+				Country:     "Country1",
+				Coordinates: []float64{1.2, 3.4},
+			},
+			want: &Port{
+				Name:        "Port1",
+				City:        "City1",
+				Country:     "Country1",
+				Coordinates: []float64{1.2, 3.4},
+			},
+		},
 	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := NewPort(tt.args.name, tt.args.city, tt.args.country, tt.args.alias, tt.args.regions, tt.args.coordinates, tt.args.province, tt.args.timezone, tt.args.unlocode, tt.args.code); !reflect.DeepEqual(got, tt.want) {
+	for name, tt := range tests {
+		t.Run(name, func(t *testing.T) {
+			if got := NewPort(tt.port.Name, tt.port.City, tt.port.Country, tt.port.Alias, tt.port.Regions, tt.port.Coordinates,
+				tt.port.Province, tt.port.Timezone, tt.port.Unlocode, tt.port.Code); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("NewPort() = %v, want %v", got, tt.want)
 			}
 		})

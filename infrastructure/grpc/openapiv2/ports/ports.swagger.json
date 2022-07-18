@@ -1,0 +1,136 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ports/ports.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "CreatePorts"
+    },
+    {
+      "name": "UpdatePorts"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/createports": {
+      "post": {
+        "summary": "Creates a list of Ports with data sourced from 'ports.json', only if the port doensn't exist in the database.",
+        "operationId": "CreatePorts_CreatePorts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/portsCreateOrUpdatePortsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/portsCreateOrUpdatePortsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CreatePorts"
+        ]
+      }
+    },
+    "/v1/updateports": {
+      "post": {
+        "summary": "Updates a list of Ports with data sourced from 'ports.json', only if the port exists in the database.",
+        "operationId": "UpdatePorts_UpdatePorts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/portsCreateOrUpdatePortsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/portsCreateOrUpdatePortsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "UpdatePorts"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "portsCreateOrUpdatePortsRequest": {
+      "type": "object",
+      "properties": {
+        "filepath": {
+          "type": "string"
+        }
+      },
+      "title": "Create a list of Ports"
+    },
+    "portsCreateOrUpdatePortsResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "The response message to explain status of Port Creation"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
